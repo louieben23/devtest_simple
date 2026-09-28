@@ -4,6 +4,7 @@ import { useState } from "react";
 import { formatWholeCurrency } from "@/lib/monthly-summary";
 import type { JobsResponse } from "@/lib/jobs";
 import { CheckIcon } from "@/components/dashboard/dashboard-icons";
+import { Skeleton } from "@/components/skeleton";
 
 type CurrentJobSectionProps = {
   jobsResponse: JobsResponse | null;
@@ -18,14 +19,7 @@ export function CurrentJobSection({ jobsResponse, onJobDone }: CurrentJobSection
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!jobsResponse) {
-    return (
-      <div className="flex min-w-0 flex-1 flex-col gap-3 max-lg:justify-center">
-        <div className="h-3 w-24 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800" />
-        <div className="h-14 w-56 animate-pulse rounded-md bg-zinc-200/70 lg:h-10 lg:w-40 dark:bg-zinc-800" />
-        <div className="h-5 w-full animate-pulse rounded-md bg-zinc-200/70 lg:h-4 dark:bg-zinc-800" />
-        <div className="mt-2 h-48 animate-pulse lg:h-40 rounded-2xl bg-zinc-200/70 dark:bg-zinc-800" />
-      </div>
-    );
+    return <CurrentJobSkeleton />;
   }
 
   const { currentJob } = jobsResponse;
@@ -112,6 +106,21 @@ export function CurrentJobSection({ jobsResponse, onJobDone }: CurrentJobSection
         </p>
       )}
     </section>
+  );
+}
+
+// Placeholder shaped like the current job: label, title, customer, description, price and the "Job Done" button.
+export function CurrentJobSkeleton() {
+  return (
+    <div className="flex min-w-0 flex-1 flex-col max-lg:justify-center">
+      <SectionLabel />
+      <Skeleton className="mt-3 h-14 w-56 rounded-md lg:h-9 lg:w-40" />
+      <Skeleton className="mt-3 h-5 w-32 rounded-md lg:mt-2 lg:h-4 lg:w-24" />
+      <Skeleton className="mt-4 h-5 w-full rounded-md lg:mt-3 lg:h-3" />
+      <Skeleton className="mt-2 h-5 w-2/3 rounded-md lg:h-3" />
+      <Skeleton className="mt-6 h-12 w-36 rounded-md lg:mt-4 lg:h-8 lg:w-28" />
+      <Skeleton className="mt-5 h-48 rounded-2xl lg:h-40" />
+    </div>
   );
 }
 

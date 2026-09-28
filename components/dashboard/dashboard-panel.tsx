@@ -14,6 +14,7 @@ import { MoneyInCard } from "@/components/dashboard/money-in-card";
 import { MoneyOutCard } from "@/components/dashboard/money-out-card";
 import { TopSpendingCard } from "@/components/dashboard/top-spending-card";
 import { ParallaxHero } from "@/components/dashboard/parallax-hero";
+import { DASHBOARD_GRID_CLASS_NAME, STATS_GRID_CLASS_NAME } from "@/components/dashboard/dashboard-layout";
 
 const STATS_SECTION_ID = "stats";
 
@@ -47,7 +48,7 @@ export function DashboardPanel({ firstName }: { firstName: string }) {
   const transactions = transactionsResponse?.transactions ?? null;
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
+    <div className={DASHBOARD_GRID_CLASS_NAME}>
       <h1 className="sr-only">Dashboard</h1>
 
       <ParallaxHero statsSectionId={STATS_SECTION_ID} hasStats={!hasError}>
@@ -83,7 +84,7 @@ export function DashboardPanel({ firstName }: { firstName: string }) {
         // On mobile this is a sheet that slides up over the hero, with Money in and Money out side by side.
         <div
           id={STATS_SECTION_ID}
-          className="grid scroll-mt-4 grid-cols-2 gap-3 md:grid-cols-3 max-lg:relative max-lg:z-10 max-lg:-mx-4 max-lg:rounded-t-3xl max-lg:bg-zinc-50 max-lg:px-4 max-lg:pt-4 max-lg:shadow-[0_-12px_32px_-12px_rgba(0,0,0,0.12)] max-lg:dark:bg-black"
+          className={STATS_GRID_CLASS_NAME}
         >
           <ProfitCard monthlySummary={monthlySummary} className="col-span-2" />
           <MoneyInCard monthlySummary={monthlySummary} transactionsResponse={transactionsResponse} />

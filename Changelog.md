@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.9.0] - 2026-09-28
+
+### Added
+
+- `components/skeleton.tsx` — `Skeleton`: a shared pulsing placeholder block, sized with `className`. The pulse stops for visitors who prefer reduced motion, and screen readers skip it.
+- `components/dashboard/dashboard-skeleton.tsx` — `DashboardSkeleton`: a full dashboard loading skeleton with the same layout as the dashboard. It includes the clock and greeting, the current job, the "Scroll for Stats" indicator on mobile, and all five cards. The cards are the real cards in their loading state, so nothing jumps when the dashboard arrives. It announces "Loading your dashboard…" to screen readers.
+- `components/dashboard/dashboard-layout.ts` — `DASHBOARD_GRID_CLASS_NAME` and `STATS_GRID_CLASS_NAME`, shared by the dashboard and its skeleton so the two layouts stay in sync.
+
+### Updated
+
+- `app/page.tsx` — The page no longer waits for the sign-in check and profile before showing anything. The header and footer show straight away, and `DashboardSkeleton` fills the page until the new `SignedInDashboard` component has loaded the user. The sign-in check and redirect are unchanged.
+- `components/dashboard/current-job-section.tsx` — The loading placeholder is now `CurrentJobSkeleton`, built with `Skeleton`. It is shaped like the current job: the "Current Job" label, title, customer, description, price and the "Job Done" button.
+- `components/dashboard/dashboard-card.tsx` — `CardBodySkeleton` uses `Skeleton`. It looks the same as before.
+- `components/dashboard/dashboard-panel.tsx` — Uses the shared layout classes from `dashboard-layout.ts`. The layout is unchanged.
+
+### Bug Fixes
+
+- The dashboard was blank until the server had checked who was signed in. The loading skeleton now shows during that wait.
+
 ## [0.8.3] - 2026-09-28
 
 ### Added

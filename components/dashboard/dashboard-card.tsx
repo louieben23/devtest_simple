@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { formatSignedWholeCurrency, formatWholeCurrency, type Sentiment } from "@/lib/monthly-summary";
+import { Skeleton } from "@/components/skeleton";
 
 const SENTIMENT_TEXT_COLORS: Record<Sentiment, string> = {
   positive: "text-emerald-600 dark:text-emerald-400",
@@ -81,9 +82,9 @@ export function CardPill({ children }: { children: ReactNode }) {
 export function CardBodySkeleton() {
   return (
     <div className="flex flex-1 flex-col gap-3">
-      <div className="h-9 w-3/4 max-w-36 animate-pulse rounded-md bg-zinc-200/70 md:h-12 dark:bg-zinc-800" />
-      <div className="h-4 w-full max-w-44 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800" />
-      <div className="mt-auto h-16 animate-pulse md:h-24 rounded-xl bg-zinc-200/70 dark:bg-zinc-800" />
+      <Skeleton className="h-9 w-3/4 max-w-36 rounded-md md:h-12" />
+      <Skeleton className="h-4 w-full max-w-44 rounded-md" />
+      <Skeleton className="mt-auto h-16 rounded-xl md:h-24" />
     </div>
   );
 }
