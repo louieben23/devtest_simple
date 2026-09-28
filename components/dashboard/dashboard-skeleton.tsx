@@ -18,7 +18,7 @@ export function DashboardSkeleton() {
 
       {/* Matches ParallaxHero: fills the screen below the site header on mobile. */}
       <div className="flex flex-col pt-2 max-lg:min-h-[calc(100svh-7.5rem)]">
-        <div className="flex flex-1 flex-col gap-6 lg:gap-8">
+        <div className="flex flex-1 flex-col gap-4 lg:gap-8">
           <div className="flex items-start justify-between gap-4 lg:block">
             {/* Time, then the greeting and first name. */}
             <div>
@@ -35,7 +35,7 @@ export function DashboardSkeleton() {
         </div>
 
         {/* Stands in for the "Scroll for Stats" indicator. */}
-        <Skeleton className="mx-auto mt-6 h-9 w-28 rounded-md lg:hidden" />
+        <Skeleton className="mx-auto mt-3 h-12 w-28 rounded-md lg:hidden" />
       </div>
 
       <div className={STATS_GRID_CLASS_NAME}>

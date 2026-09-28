@@ -28,10 +28,10 @@ export function CurrentJobSection({ jobsResponse, onJobDone }: CurrentJobSection
     return (
       <section id="current-job" aria-label="Current Job" className="min-w-0 flex-1">
         <SectionLabel />
-        <h2 className="mt-2 text-5xl font-light lg:text-4xl tracking-tight text-zinc-900 dark:text-zinc-50">
+        <h2 className="mt-2 text-4xl font-light tracking-tight text-zinc-900 dark:text-zinc-50">
           All done
         </h2>
-        <p className="mt-2 text-lg text-zinc-500 lg:text-xs dark:text-zinc-400">
+        <p className="mt-2 text-base text-zinc-500 lg:text-xs dark:text-zinc-400">
           No jobs left in the queue. Nice work.
         </p>
       </section>
@@ -59,20 +59,20 @@ export function CurrentJobSection({ jobsResponse, onJobDone }: CurrentJobSection
 
   return (
     <section id="current-job" aria-label="Current Job" className="flex min-w-0 flex-1 flex-col">
-      {/* Larger on mobile, where the current job is the full screen hero,
+      {/* Larger on mobile, where the current job is the full screen hero, but sized to fit a phone screen,
           and centered in the space above the "Job Done" button. */}
       <div className="flex flex-col max-lg:flex-1 max-lg:justify-center">
         <SectionLabel />
-        <h2 className="mt-2 break-words text-6xl font-light tracking-tight text-zinc-900 lg:text-4xl dark:text-zinc-50">
+        <h2 className="mt-2 break-words text-4xl font-light tracking-tight text-zinc-900 dark:text-zinc-50">
           {currentJob.title}
         </h2>
-        <p className="mt-2 text-lg font-bold text-zinc-900 lg:mt-1 lg:text-sm dark:text-zinc-50">
+        <p className="mt-2 text-base font-bold text-zinc-900 lg:mt-1 lg:text-sm dark:text-zinc-50">
           {currentJob.customer}
         </p>
-        <p className="mt-3 text-lg leading-relaxed text-zinc-500 lg:mt-2 lg:text-xs lg:leading-normal dark:text-zinc-400">
+        <p className="mt-2 text-base leading-relaxed text-zinc-500 lg:text-xs lg:leading-normal dark:text-zinc-400">
           {currentJob.description}
         </p>
-        <p className="mt-6 text-5xl font-light tracking-tight tabular-nums text-zinc-900 lg:mt-4 lg:text-3xl dark:text-zinc-50">
+        <p className="mt-4 text-4xl font-light tracking-tight tabular-nums text-zinc-900 lg:text-3xl dark:text-zinc-50">
           {formatWholeCurrency(currentJob.priceCents)}
         </p>
       </div>
@@ -81,17 +81,17 @@ export function CurrentJobSection({ jobsResponse, onJobDone }: CurrentJobSection
         type="button"
         onClick={() => handleJobDone(currentJob.id)}
         disabled={isSaving || isDone}
-        className={`mt-5 flex min-h-48 w-full lg:min-h-40 flex-col justify-between rounded-2xl p-5 text-left text-white transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 disabled:cursor-default ${
+        className={`mt-4 flex min-h-32 w-full flex-col justify-between rounded-2xl p-4 text-left lg:mt-5 lg:min-h-40 lg:p-5 text-white transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-500 disabled:cursor-default ${
           isDone
             ? "bg-emerald-600"
             : "bg-linear-to-br from-orange-500 to-orange-600 shadow-lg shadow-orange-500/25 hover:from-orange-600 hover:to-orange-700 active:scale-[0.98] disabled:opacity-80"
         }`}
       >
-        <span className="flex h-11 w-11 items-center justify-center rounded-full bg-white/20">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 lg:h-11 lg:w-11">
           <CheckIcon />
         </span>
         <span>
-          <span className="block text-4xl font-light tracking-tight lg:text-3xl">{buttonLabel}</span>
+          <span className="block text-3xl font-light tracking-tight">{buttonLabel}</span>
           <span className="mt-1 block text-xs text-white/80">
             {isDone
               ? `${formatWholeCurrency(currentJob.priceCents)} added to money in`
@@ -114,12 +114,12 @@ export function CurrentJobSkeleton() {
   return (
     <div className="flex min-w-0 flex-1 flex-col max-lg:justify-center">
       <SectionLabel />
-      <Skeleton className="mt-3 h-14 w-56 rounded-md lg:h-9 lg:w-40" />
-      <Skeleton className="mt-3 h-5 w-32 rounded-md lg:mt-2 lg:h-4 lg:w-24" />
-      <Skeleton className="mt-4 h-5 w-full rounded-md lg:mt-3 lg:h-3" />
-      <Skeleton className="mt-2 h-5 w-2/3 rounded-md lg:h-3" />
-      <Skeleton className="mt-6 h-12 w-36 rounded-md lg:mt-4 lg:h-8 lg:w-28" />
-      <Skeleton className="mt-5 h-48 rounded-2xl lg:h-40" />
+      <Skeleton className="mt-3 h-9 w-48 rounded-md lg:w-40" />
+      <Skeleton className="mt-3 h-4 w-28 rounded-md lg:mt-2 lg:w-24" />
+      <Skeleton className="mt-3 h-4 w-full rounded-md lg:h-3" />
+      <Skeleton className="mt-2 h-4 w-2/3 rounded-md lg:h-3" />
+      <Skeleton className="mt-4 h-9 w-32 rounded-md lg:h-8 lg:w-28" />
+      <Skeleton className="mt-4 h-32 rounded-2xl lg:mt-5 lg:h-40" />
     </div>
   );
 }

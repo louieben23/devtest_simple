@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.9.1] - 2026-09-28
+
+### Added
+
+- None.
+
+### Updated
+
+- `components/dashboard/current-job-section.tsx` — Smaller current job on mobile so the whole hero fits on a phone screen: the title and price are `text-4xl`, the customer and description are `text-base`, the spacing is tighter, and the "Job Done" button is shorter (`min-h-32`) with a smaller check icon. The loading placeholder matches. Desktop sizes are unchanged.
+- `components/dashboard/parallax-hero.tsx` — Smaller gap between the clock row and the current job, and a more compact "Scroll for Stats" indicator on mobile.
+- `components/dashboard/dashboard-skeleton.tsx` — The hero gap and the "Scroll for Stats" placeholder match the new mobile spacing.
+
+### Bug Fixes
+
+- `components/dashboard/parallax-hero.tsx` — On short phone screens, the bottom of the mobile hero (the "Job Done" button and "Scroll for Stats") couldn't be seen. The hero was taller than the screen, and the first swipe jumped straight to the stats. Now, when the hero doesn't fit, it scrolls normally until its end is on screen, and only then does a swipe or scroll open the stats. The parallax drift also waits until then, so it doesn't push the button down out of reach.
+
 ## [0.9.0] - 2026-09-28
 
 ### Added

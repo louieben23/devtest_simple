@@ -62,7 +62,13 @@ export function ParallaxHero({ statsSectionId, hasStats, children }: ParallaxHer
       }
 
       const heroBounds = hero.getBoundingClientRect();
-      const scrolledPastPixels = Math.min(Math.max(-heroBounds.top, 0), heroBounds.height);
+      // When the hero is taller than the screen, the effect waits until its end has been scrolled into view,
+      // so the drifting content never pushes the "Job Done" button out of reach.
+      const heroOverflowPixels = Math.max(heroBounds.height - window.innerHeight, 0);
+      const scrolledPastPixels = Math.min(
+        Math.max(-heroBounds.top - heroOverflowPixels, 0),
+        heroBounds.height,
+      );
       const scrollProgress = heroBounds.height > 0 ? scrolledPastPixels / heroBounds.height : 0;
 
       content.style.transform = `translate3d(0, ${scrolledPastPixels * PARALLAX_SPEED}px, 0) scale(${1 - scrollProgress * MAXIMUM_SCALE_REDUCTION})`;
@@ -100,11 +106,15 @@ export function ParallaxHero({ statsSectionId, hasStats, children }: ParallaxHer
     let isOpeningStats = false;
     let openingStatsTimeoutId = 0;
 
-    // True until the stats have been scrolled up to the top of the screen.
+    // True once the end of the hero is on screen, until the stats have been scrolled up to the top of the screen.
+    // On short screens the hero scrolls normally until its end (the "Job Done" button) has been seen.
     function isHeroShowing() {
+      const hero = heroRef.current;
       const statsSection = document.getElementById(statsSectionId);
       return (
         mobileQuery.matches &&
+        hero !== null &&
+        hero.getBoundingClientRect().bottom <= window.innerHeight + 1 &&
         statsSection !== null &&
         statsSection.getBoundingClientRect().top > STATS_OPEN_TOP_PIXELS
       );
@@ -124,8 +134,10 @@ export function ParallaxHero({ statsSectionId, hasStats, children }: ParallaxHer
       if (event.cancelable) event.preventDefault();
     }
 
+    // Only a swipe that starts with the hero's end on screen opens the stats. A swipe that scrolls the end
+    // into view keeps scrolling normally, so the button can be seen and pressed before the stats open.
     function handleTouchStart(event: TouchEvent) {
-      swipeStartY = event.touches[0].clientY;
+      swipeStartY = isHeroShowing() ? event.touches[0].clientY : null;
     }
 
     function handleTouchMove(event: TouchEvent) {
@@ -178,7 +190,7 @@ export function ParallaxHero({ statsSectionId, hasStats, children }: ParallaxHer
       // Fills the screen below the site header on mobile.
       className={`flex flex-col pt-2 ${hasStats ? "max-lg:min-h-[calc(100svh-7.5rem)]" : ""}`}
     >
-      <div ref={contentRef} className="flex flex-1 flex-col gap-6 will-change-transform lg:gap-8">
+      <div ref={contentRef} className="flex flex-1 flex-col gap-4 will-change-transform lg:gap-8">
         {children}
       </div>
 
@@ -187,7 +199,7 @@ export function ParallaxHero({ statsSectionId, hasStats, children }: ParallaxHer
           ref={indicatorRef}
           href={`#${statsSectionId}`}
           onClick={scrollToStats}
-          className="mx-auto mt-4 flex flex-col items-center gap-1 py-2 text-[11px] font-bold uppercase tracking-wider text-zinc-500 transition-colors hover:text-zinc-900 lg:hidden dark:text-zinc-400 dark:hover:text-zinc-50"
+          className="mx-auto mt-2 flex flex-col items-center gap-1 py-1 text-[11px] font-bold uppercase tracking-wider text-zinc-500 transition-colors hover:text-zinc-900 lg:hidden dark:text-zinc-400 dark:hover:text-zinc-50"
         >
           Scroll for Stats
           <ChevronDownIcon className="motion-safe:animate-bounce" />
