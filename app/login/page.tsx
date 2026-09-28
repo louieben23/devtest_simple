@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { safeNextPath } from "@/lib/safe-redirect";
 import { signInWithGoogle } from "@/app/auth/actions";
 import { SiteHeader } from "@/components/site-header";
-import { GITHUB_REPOSITORY_URL, GitHubIcon } from "@/components/github-icon";
+import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -57,18 +57,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           </button>
         </form>
       </main>
-      <footer className="flex items-center gap-2 py-6 text-xs text-zinc-500 dark:text-zinc-400">
-        SIMPLE by Louie Casapao
-        <a
-          href={GITHUB_REPOSITORY_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub repository"
-          className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
-        >
-          <GitHubIcon />
-        </a>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
