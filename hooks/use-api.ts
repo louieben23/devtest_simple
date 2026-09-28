@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type APIResult<ResponseData> = {
   requestedUrl: string;
@@ -8,9 +8,12 @@ type APIResult<ResponseData> = {
   error: string | null;
 };
 
+type ChangeMethod = "POST" | "PATCH" | "DELETE";
+
 // Fetches JSON from one of our API routes. Use this for every API request.
 export function useAPI<ResponseData>(url: string) {
   const [result, setResult] = useState<APIResult<ResponseData> | null>(null);
+  const [reloadCount, setReloadCount] = useState(0);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -30,7 +33,30 @@ export function useAPI<ResponseData>(url: string) {
       });
 
     return () => abortController.abort();
-  }, [url]);
+  }, [url, reloadCount]);
+
+  // Loads the data again. The current data stays on screen until the new data arrives.
+  const refetch = useCallback(() => setReloadCount((count) => count + 1), []);
+
+  // Sends a change to the same url, then reloads the data.
+  // Throws with the API's error message if the request fails.
+  const sendRequest = useCallback(
+    async (method: ChangeMethod, requestBody?: unknown) => {
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody?.error ?? `Request failed with status ${response.status}.`);
+      }
+
+      refetch();
+    },
+    [url, refetch],
+  );
 
   // A result for a previous url is stale, so treat it as still loading.
   const currentResult = result?.requestedUrl === url ? result : null;
@@ -39,5 +65,7 @@ export function useAPI<ResponseData>(url: string) {
     data: currentResult?.data ?? null,
     error: currentResult?.error ?? null,
     isLoading: currentResult === null,
+    refetch,
+    sendRequest,
   };
 }

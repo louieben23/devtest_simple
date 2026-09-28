@@ -1,5 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
-import type { MonthTotals, MonthlySummaryResponse } from "@/lib/monthly-summary";
+import {
+  formatMonthLabel,
+  getUtcMonthStart,
+  toISODateString,
+  type MonthTotals,
+  type MonthlySummaryResponse,
+} from "@/lib/monthly-summary";
 
 type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -13,7 +19,7 @@ async function getMonthTotals(
   monthStart: Date,
 ): Promise<MonthTotals> {
   const { data, error } = await supabase
-    .rpc("get_monthly_totals", { month_start: monthStart.toISOString().slice(0, 10) })
+    .rpc("get_monthly_totals", { month_start: toISODateString(monthStart) })
     .single<MonthlyTotalsRow>();
 
   if (error) throw error;
@@ -36,8 +42,8 @@ export async function GET() {
   }
 
   const today = new Date();
-  const currentMonthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), 1));
-  const previousMonthStart = new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - 1, 1));
+  const currentMonthStart = getUtcMonthStart(today, 0);
+  const previousMonthStart = getUtcMonthStart(today, -1);
 
   try {
     const [currentMonth, previousMonth] = await Promise.all([
@@ -46,11 +52,7 @@ export async function GET() {
     ]);
 
     const monthlySummary: MonthlySummaryResponse = {
-      monthLabel: currentMonthStart.toLocaleDateString("en-US", {
-        month: "long",
-        year: "numeric",
-        timeZone: "UTC",
-      }),
+      monthLabel: formatMonthLabel(currentMonthStart),
       currentMonth,
       previousMonth,
     };
