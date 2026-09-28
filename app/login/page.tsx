@@ -24,12 +24,13 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   if (data?.claims) redirect(next);
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-zinc-50 px-4 dark:bg-black">
-      <main className="w-full max-w-sm rounded-2xl border border-black/[.08] bg-white p-8 shadow-sm dark:border-white/[.145] dark:bg-zinc-950">
-        <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-zinc-50">
-          Welcome
+    <div className="flex flex-1 flex-col items-center bg-zinc-50 px-4 dark:bg-black">
+      <main className="flex w-full max-w-sm flex-1 flex-col justify-center">
+        <h1 className="text-2xl text-center font-semibold tracking-tight text-black dark:text-zinc-50">
+          Welcome to Angus Shield
+
         </h1>
-        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-center text-zinc-600 dark:text-zinc-400">
           Sign in to continue.
         </p>
 
@@ -53,7 +54,27 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           </button>
         </form>
       </main>
+      <footer className="flex items-center gap-2 py-6 text-xs text-zinc-500 dark:text-zinc-400">
+        SIMPLE by Louie Casapao
+        <a
+          href="https://github.com/louieben23/devtest_simple"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub repository"
+          className="transition-colors hover:text-zinc-900 dark:hover:text-zinc-50"
+        >
+          <GitHubIcon />
+        </a>
+      </footer>
     </div>
+  );
+}
+
+function GitHubIcon() {
+  return (
+    <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+    </svg>
   );
 }
 
