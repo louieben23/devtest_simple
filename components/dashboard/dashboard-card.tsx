@@ -26,9 +26,10 @@ export function DashboardCard({ id, title, action, className = "", children }: D
     <section
       id={id}
       aria-label={title}
-      className={`flex min-h-64 scroll-mt-6 flex-col overflow-hidden rounded-2xl bg-white p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] dark:bg-zinc-900 ${className}`}
+      className={`flex min-w-0 scroll-mt-6 flex-col overflow-hidden rounded-2xl bg-white p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] md:min-h-64 md:p-5 dark:bg-zinc-900 ${className}`}
     >
-      <header className="flex min-h-6 items-center justify-between gap-3">
+      {/* Wraps so the trend badge drops below the title on narrow mobile tiles. */}
+      <header className="flex min-h-6 flex-wrap items-center justify-between gap-x-3 gap-y-1">
         <h2 className="text-xs font-bold text-zinc-900 dark:text-zinc-50">{title}</h2>
         {action}
       </header>
@@ -45,7 +46,7 @@ type BigAmountProps = {
 export function BigAmount({ amountCents, sentiment = "neutral" }: BigAmountProps) {
   return (
     <p
-      className={`text-5xl font-light tracking-tight tabular-nums ${SENTIMENT_TEXT_COLORS[sentiment]}`}
+      className={`text-3xl font-light tracking-tight md:text-5xl tabular-nums ${SENTIMENT_TEXT_COLORS[sentiment]}`}
     >
       {formatWholeCurrency(amountCents)}
     </p>
@@ -80,9 +81,9 @@ export function CardPill({ children }: { children: ReactNode }) {
 export function CardBodySkeleton() {
   return (
     <div className="flex flex-1 flex-col gap-3">
-      <div className="h-12 w-36 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800" />
-      <div className="h-4 w-44 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800" />
-      <div className="mt-auto h-24 animate-pulse rounded-xl bg-zinc-200/70 dark:bg-zinc-800" />
+      <div className="h-9 w-3/4 max-w-36 animate-pulse rounded-md bg-zinc-200/70 md:h-12 dark:bg-zinc-800" />
+      <div className="h-4 w-full max-w-44 animate-pulse rounded-md bg-zinc-200/70 dark:bg-zinc-800" />
+      <div className="mt-auto h-16 animate-pulse md:h-24 rounded-xl bg-zinc-200/70 dark:bg-zinc-800" />
     </div>
   );
 }

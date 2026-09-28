@@ -4,10 +4,15 @@ import { CardBodySkeleton, CardPill, DashboardCard } from "@/components/dashboar
 
 const TOP_EXPENSE_COUNT = 5;
 
-export function TopSpendingCard({ transactions }: { transactions: TransactionItem[] | null }) {
+type TopSpendingCardProps = {
+  transactions: TransactionItem[] | null;
+  className?: string;
+};
+
+export function TopSpendingCard({ transactions, className }: TopSpendingCardProps) {
   if (!transactions) {
     return (
-      <DashboardCard id="top-spending" title="Top spending">
+      <DashboardCard id="top-spending" title="Top spending" className={className}>
         <CardBodySkeleton />
       </DashboardCard>
     );
@@ -24,13 +29,14 @@ export function TopSpendingCard({ transactions }: { transactions: TransactionIte
     <DashboardCard
       id="top-spending"
       title="Top spending"
+      className={className}
       action={<CardPill>{expenses.length} payments</CardPill>}
     >
       {topExpenses.length === 0 ? (
         <p className="text-sm text-zinc-500 dark:text-zinc-400">No spending this month yet.</p>
       ) : (
         <>
-          <p className="text-5xl font-light tracking-tight tabular-nums text-zinc-900 dark:text-zinc-50">
+          <p className="text-3xl md:text-5xl font-light tracking-tight tabular-nums text-zinc-900 dark:text-zinc-50">
             {largestExpenseSharePercent}%
           </p>
           <p className="mt-2 truncate text-xs text-zinc-500 dark:text-zinc-400">

@@ -4,11 +4,17 @@ import { CardBodySkeleton, CardPill, DashboardCard } from "@/components/dashboar
 
 const VISIBLE_JOB_COUNT = 5;
 
-export function NextJobCard({ nextJobs }: { nextJobs: JobItem[] | null }) {
+type NextJobCardProps = {
+  nextJobs: JobItem[] | null;
+  className?: string;
+};
+
+export function NextJobCard({ nextJobs, className }: NextJobCardProps) {
   return (
     <DashboardCard
       id="next-job"
       title="Next Job"
+      className={className}
       action={nextJobs && <CardPill>{nextJobs.length} queued</CardPill>}
     >
       {!nextJobs ? (

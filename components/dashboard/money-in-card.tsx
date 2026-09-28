@@ -68,7 +68,7 @@ export function MoneyInCard({ monthlySummary, transactionsResponse }: MoneyInCar
         <div
           role="img"
           aria-label="Money in for each day of this month"
-          className="flex h-24 items-end justify-between"
+          className="flex h-16 items-end justify-between md:h-24"
         >
           {dailyIncomeCents.map((amountCents, dayIndex) => {
             const heightPercent =
@@ -86,7 +86,8 @@ export function MoneyInCard({ monthlySummary, transactionsResponse }: MoneyInCar
               <div
                 key={dayIndex}
                 title={`Day ${dayIndex + 1}: ${formatCurrency(amountCents)}`}
-                className={`w-1 rounded-full ${barColor}`}
+                // Thinner bars on mobile so a whole month fits in a half width tile.
+                className={`w-0.5 rounded-full md:w-1 ${barColor}`}
                 style={{ height: `${heightPercent}%` }}
               />
             );

@@ -1,5 +1,85 @@
 # Changelog
 
+## [0.8.3] - 2026-09-28
+
+### Added
+
+- None.
+
+### Updated
+
+- `components/dashboard/parallax-hero.tsx` — On mobile, one swipe up (or one scroll down with a mouse wheel or trackpad) while the current job hero is showing smoothly scrolls straight to the stats. The browser's own scrolling is paused during that scroll so it can't interrupt it. Once the stats are open, scrolling works normally, and scrolling back up to the hero is unchanged. Desktop scrolling is unchanged. The "Scroll for Stats" link and the swipe share one `scrollToSection` helper.
+
+### Bug Fixes
+
+- None.
+
+## [0.8.2] - 2026-09-28
+
+### Added
+
+- None.
+
+### Updated
+
+- `components/dashboard/current-job-section.tsx` — On mobile the "Job Done" button is back to its fixed height instead of growing to fill the hero. The job details now fill the hero: they are larger (title, customer, description and price, with the description in a bigger, easier to read size) and centered in the space between the clock and the button. The loading placeholder and the "All done" message match. Desktop sizes are unchanged.
+- `components/dashboard/dashboard-panel.tsx` — Updated the comment on the current job wrapper.
+
+### Bug Fixes
+
+- None.
+
+## [0.8.1] - 2026-09-28
+
+### Added
+
+- None.
+
+### Updated
+
+- None.
+
+### Bug Fixes
+
+- `components/dashboard/dashboard-panel.tsx` — Removed the big empty gap in the mobile hero. The current job was pushed to the bottom of the full-screen hero, far from the clock. On mobile it now sits right under the clock and stretches to fill the hero. On desktop it still sits at the bottom of the left column.
+- `components/dashboard/current-job-section.tsx` — On mobile the "Job Done" button (and its loading placeholder) grows to fill the space left in the hero instead of leaving it empty.
+- `components/dashboard/parallax-hero.tsx` — Tighter spacing on mobile: smaller gap between the clock row and the current job, and less space above "Scroll for Stats".
+
+## [0.8.0] - 2026-09-28
+
+### Added
+
+- `components/dashboard/parallax-hero.tsx` — `ParallaxHero`: on mobile (below the `lg` breakpoint) the clock and current job fill the screen below the site header. As you scroll, the hero content drifts at 40% of the scroll speed, fades and shrinks slightly while the stats slide up over it. A bouncing "Scroll for Stats" indicator at the bottom of the hero smoothly scrolls to the stats when tapped and fades out once scrolling starts. The effect is off on desktop and for visitors who prefer reduced motion.
+- `components/dashboard/dashboard-icons.tsx` — `ChevronDownIcon`.
+
+### Updated
+
+- `components/dashboard/dashboard-panel.tsx` — The left column is now wrapped in `ParallaxHero`. On mobile the clock and "Sign out" share one compact row, and the cards sit in a rounded "stats" sheet that scrolls up over the hero. The card grid is two columns on mobile: Profit, Next Job and Top spending are full width, and Money in and Money out sit side by side. The desktop layout is unchanged.
+- `components/dashboard/current-job-section.tsx` — Larger job title, customer, description, price and "Job Done" button on mobile, where the current job is the hero. Desktop sizes are unchanged.
+- `components/dashboard/dashboard-clock.tsx` — Smaller time and spacing on mobile.
+- `components/dashboard/dashboard-card.tsx` — Cards are more compact on mobile: less padding, no minimum height and smaller big amounts. The card header wraps, so the trend badge drops below the title on narrow tiles. The loading skeleton scales down to fit.
+- `components/dashboard/money-in-card.tsx` — Thinner and shorter daily bars on mobile, so the whole month fits in a half width tile.
+- `components/dashboard/profit-card.tsx` — Shorter tick slider on mobile.
+- `components/dashboard/next-job-card.tsx` and `components/dashboard/top-spending-card.tsx` — Accept a `className` so the panel can set their width. Top spending's percentage is smaller on mobile.
+
+### Bug Fixes
+
+- None.
+
+## [0.7.1] - 2026-09-28
+
+### Added
+
+- None.
+
+### Updated
+
+- None.
+
+### Bug Fixes
+
+- `components/dashboard/dashboard-panel.tsx` — The "Job Done" button now lines up with the bottom of the dashboard cards on large screens. The current job section was vertically centered in the left column, which left empty space below the button. It now sits at the bottom of the column, and the column's bottom padding was removed.
+
 ## [0.7.0] - 2026-09-28
 
 ### Added

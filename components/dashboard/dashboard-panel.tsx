@@ -13,8 +13,12 @@ import { ProfitCard } from "@/components/dashboard/profit-card";
 import { MoneyInCard } from "@/components/dashboard/money-in-card";
 import { MoneyOutCard } from "@/components/dashboard/money-out-card";
 import { TopSpendingCard } from "@/components/dashboard/top-spending-card";
+import { ParallaxHero } from "@/components/dashboard/parallax-hero";
+
+const STATS_SECTION_ID = "stats";
 
 // Clock and current job on the left; the cards on the right.
+// On mobile the current job is a full screen hero, and the cards scroll up over it.
 export function DashboardPanel({ firstName }: { firstName: string }) {
   const {
     data: jobsResponse,
@@ -46,10 +50,11 @@ export function DashboardPanel({ firstName }: { firstName: string }) {
     <div className="grid grid-cols-1 gap-6 lg:grid-cols-[16rem_minmax(0,1fr)]">
       <h1 className="sr-only">Dashboard</h1>
 
-      <aside className="flex flex-col gap-8 py-2">
-        <div>
+      <ParallaxHero statsSectionId={STATS_SECTION_ID} hasStats={!hasError}>
+        {/* On mobile the clock and sign out share a compact row, so the current job stays the hero. */}
+        <div className="flex items-start justify-between gap-4 lg:block">
           <DashboardClock firstName={firstName} />
-          <form action={signOut} className="mt-3">
+          <form action={signOut} className="lg:mt-3">
             <button
               type="submit"
               className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
@@ -60,10 +65,12 @@ export function DashboardPanel({ firstName }: { firstName: string }) {
           </form>
         </div>
 
-        <div className="flex items-center lg:flex-1">
+        {/* On desktop it sits at the bottom so the "Job Done" button lines up with the bottom of the cards.
+            On mobile it stretches to fill the hero, with the job details centered above the button. */}
+        <div className="flex flex-1 lg:items-end">
           {!hasError && <CurrentJobSection jobsResponse={jobsResponse} onJobDone={completeJob} />}
         </div>
-      </aside>
+      </ParallaxHero>
 
       {hasError ? (
         <p
@@ -73,12 +80,16 @@ export function DashboardPanel({ firstName }: { firstName: string }) {
           Couldn&apos;t load your dashboard. Please refresh to try again.
         </p>
       ) : (
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-          <ProfitCard monthlySummary={monthlySummary} className="md:col-span-2" />
+        // On mobile this is a sheet that slides up over the hero, with Money in and Money out side by side.
+        <div
+          id={STATS_SECTION_ID}
+          className="grid scroll-mt-4 grid-cols-2 gap-3 md:grid-cols-3 max-lg:relative max-lg:z-10 max-lg:-mx-4 max-lg:rounded-t-3xl max-lg:bg-zinc-50 max-lg:px-4 max-lg:pt-4 max-lg:shadow-[0_-12px_32px_-12px_rgba(0,0,0,0.12)] max-lg:dark:bg-black"
+        >
+          <ProfitCard monthlySummary={monthlySummary} className="col-span-2" />
           <MoneyInCard monthlySummary={monthlySummary} transactionsResponse={transactionsResponse} />
           <MoneyOutCard monthlySummary={monthlySummary} />
-          <NextJobCard nextJobs={jobsResponse?.nextJobs ?? null} />
-          <TopSpendingCard transactions={transactions} />
+          <NextJobCard nextJobs={jobsResponse?.nextJobs ?? null} className="col-span-2 md:col-span-1" />
+          <TopSpendingCard transactions={transactions} className="col-span-2 md:col-span-1" />
         </div>
       )}
     </div>

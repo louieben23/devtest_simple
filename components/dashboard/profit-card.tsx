@@ -74,11 +74,11 @@ export function ProfitCard({ monthlySummary, className }: ProfitCardProps) {
         </dl>
       </div>
 
-      <div className="mt-auto pt-8">
+      <div className="mt-auto pt-6 md:pt-8">
         <div
           role="img"
           aria-label={`${keptPercent}% of this month's money in kept as profit`}
-          className="flex h-16 items-end justify-between"
+          className="flex h-12 items-end justify-between md:h-16"
         >
           {Array.from({ length: TICK_COUNT }, (_, tickIndex) => {
             const isMarker = filledTickCount > 0 && tickIndex === filledTickCount - 1;

@@ -35,15 +35,16 @@ export function DashboardClock({ firstName }: { firstName: string }) {
 
   return (
     <div>
-      <p className="h-10 text-4xl font-light tracking-tight tabular-nums text-zinc-900 dark:text-zinc-50">
+      {/* Smaller on mobile so the current job stays the hero. */}
+      <p className="h-8 text-3xl font-light tracking-tight tabular-nums text-zinc-900 lg:h-10 lg:text-4xl dark:text-zinc-50">
         {now && (
           <>
             {displayHours}:{displayMinutes}
-            <span className="text-2xl">{hours < 12 ? "am" : "pm"}</span>
+            <span className="text-xl lg:text-2xl">{hours < 12 ? "am" : "pm"}</span>
           </>
         )}
       </p>
-      <p className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm lg:mt-3 text-zinc-500 dark:text-zinc-400">
         {now ? getGreeting(hours) : "Welcome back"},
         <br />
         <span className="font-bold text-zinc-900 dark:text-zinc-50">{firstName}</span>
