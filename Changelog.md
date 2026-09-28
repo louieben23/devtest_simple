@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.11.0] - 2026-09-28
+
+### Added
+
+- `supabase/migrations/20260928030000_seed_new_users.sql` — Every new user now gets the sample transactions and jobs as soon as they sign up, so the dashboard is never empty on their first visit. A new `on_auth_user_created_seed_sample_data` trigger on `auth.users` calls `reset_sample_data(target_user_id)`, a database function that replaces one user's sample transactions and jobs with fresh ones. Signed-in users can't call it, because it skips row level security.
+
+### Updated
+
+- `supabase/seed.sql` — Now calls `reset_sample_data` for every signed-up user instead of holding its own copy of the sample rows. It's still used to give the sample data to users who signed up before this change, or to reset it. The sample data and the "run it again" behavior are unchanged.
+
+### Bug Fixes
+
+- New users saw an empty dashboard until someone ran `seed.sql` by hand.
+
 ## [0.10.0] - 2026-09-28
 
 ### Added
