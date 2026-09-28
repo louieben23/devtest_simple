@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.10.0] - 2026-09-28
+
+### Added
+
+- `components/mobile-sidebar.tsx` — `MobileSidebar`: on mobile (below the `lg` breakpoint) a menu button opens a sidebar that slides in from the left, with "About" and the "See on GitHub" button. It closes from the close button, by tapping outside it, with Escape, when a link is picked, or when the screen widens to desktop. While it's open, the page behind it doesn't scroll. The slide is off for visitors who prefer reduced motion.
+
+### Updated
+
+- `components/site-header.tsx` — On mobile the "About" and "See on GitHub" links are hidden and moved into `MobileSidebar`, with the menu button on the left and the "Angus Shield" logo centered. The header height is unchanged. The desktop header is unchanged.
+
+### Bug Fixes
+
+- None.
+
 ## [0.9.1] - 2026-09-28
 
 ### Added

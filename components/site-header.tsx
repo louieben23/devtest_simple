@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { GITHUB_REPOSITORY_URL, GitHubIcon } from "@/components/github-icon";
+import { MobileSidebar } from "@/components/mobile-sidebar";
 
+// On mobile: menu button on the left and the logo centered; the links move into the sidebar.
+// On desktop: logo on the left and the links on the right.
 export function SiteHeader() {
   return (
-    <header className="flex w-full max-w-5xl items-center justify-between py-5">
+    <header className="grid w-full max-w-5xl grid-cols-[1fr_auto_1fr] items-center py-5 lg:flex lg:justify-between">
+      <MobileSidebar />
+
       <Link
         href="/"
         aria-label="Angus Shield home"
@@ -13,7 +18,7 @@ export function SiteHeader() {
         <span className="font-bold text-[#C8372D]">S</span>hield
       </Link>
 
-      <nav className="flex items-center gap-2">
+      <nav className="hidden items-center gap-2 lg:flex">
         <Link
           href="/about"
           className="flex h-9 items-center px-4 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-50"
